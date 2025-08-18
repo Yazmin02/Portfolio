@@ -4,7 +4,12 @@
   "type": "module",
   "scripts": {
     "build:ssr": "ng build --configuration production && ng run portafolio:server:production",
-    "serve:ssr": "node server.js"
+    "serve:ssr": "node server.js",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng build --configuration=production",
+    "vercel-build": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
