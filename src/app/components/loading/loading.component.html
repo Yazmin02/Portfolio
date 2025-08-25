@@ -1,0 +1,23 @@
+<div class="loading-wrapper">
+  <div class="logo-container">
+    <!-- Contador: solo mientras showName sea false -->
+    <span 
+      class="loading-percent" 
+      *ngIf="!showName"
+      [style.transform]="'scale(' + (0.5 + progress/200) + ')'"
+    >
+      {{ progress }}%
+    </span>
+
+    <!-- Barra de progreso -->
+    <div class="progress-bar" *ngIf="!showName">
+      <div class="progress-fill" [style.width.%]="progress"></div>
+      <div class="progress-circle" [style.left.%]="progress"></div>
+    </div>
+
+    <!-- Nombre -->
+    <span class="loading-text" *ngIf="showName">
+      Yazmín González
+    </span>
+  </div>
+</div>

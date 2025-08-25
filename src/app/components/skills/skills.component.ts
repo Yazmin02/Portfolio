@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 interface Skill {
   name: string;
   icon: string; // emoji o texto representativo
+  description: string;
 }
 
 interface SkillCategory {
@@ -20,21 +21,22 @@ interface SkillCategory {
 })
 export class SkillsComponent {
   skillCategories: SkillCategory[] = [
-    {
-      category: 'Skills',
-      skills: [
-        { name: 'Python', icon: '🐍' },
-        { name: 'Java', icon: '☕' },
-        { name: 'Kotlin', icon: '🤖' },
-        { name: 'JavaScript', icon: 'JS' },
-        { name: 'React', icon: '⚛️' },
-        { name: 'HTML', icon: '🌐' },
-        { name: 'CSS', icon: '🎨' },
-        { name: 'Node.js', icon: '🟢' },
-        { name: 'PostgreSQL', icon: '🐘' },
-        { name: 'MySQL', icon: '🐬' },
-        { name: 'SQLite', icon: '🗄️' }
-      ]
-    }
+  {
+    category: '',
+    skills: [
+      { name: 'Python', icon: '🐍', description: 'Análisis de datos e Inteligencia Artificial' },
+      { name: 'Java', icon: '☕', description: 'Desarrollo' },
+      { name: 'Kotlin', icon: '🤖', description: 'Desarrollo' },
+      { name: 'JavaScript', icon: 'JS', description: 'Web' },
+      { name: 'React', icon: '⚛️', description: 'Interfaces dinámicas' },
+      { name: 'HTML', icon: '🌐', description: 'Estructuras web' },
+      { name: 'CSS', icon: '🎨', description: 'Estilos, animaciones y responsive design' },
+      { name: 'Node.js', icon: '🟢', description: 'Backend' },
+      { name: 'PostgreSQL', icon: '🐘', description: 'Bases de datos relacionales' },
+      { name: 'MySQL', icon: '🐬', description: 'Bases de datos y consultas avanzadas' },
+      { name: 'SQLite', icon: '🗄️', description: 'Bases de datos locales' }
+    ]
+  }
   ];
+
 }

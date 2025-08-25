@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { NgParticlesModule } from 'ng-particles';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'app-hero',
@@ -8,24 +9,43 @@ import { NgParticlesModule } from 'ng-particles';
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.scss']
 })
-export class HeroComponent {
+export class HeroComponent implements AfterViewInit {
   name = 'Yazmín Berenice González Meneses';
-  title = 'Ingeniera en Sistemas Computacionales';
-  description = 'Ingeniera en Sistemas Computacionales egresada del IPN, con experiencia en análisis de datos, inteligencia artificial, desarrollo web, frontend y backend, así como desarrollo móvil Android. Me especializo en construir soluciones tecnológicas eficientes y escalables. Busco contribuir en proyectos multidisciplinarios que requieran habilidades técnicas diversas y trabajo colaborativo.';
+  description = `Ingeniera en Sistemas Computacionales egresada del IPN, 
+  con experiencia en análisis de datos, inteligencia artificial, desarrollo de software, 
+  así como desarrollo móvil.`;
 
-  // Declaramos como any para evitar problemas de tipos
   particlesOptions: any = {
     background: { color: { value: "transparent" } },
     fpsLimit: 60,
     particles: {
-      number: { value: 50, density: { enable: true, area: 800 } },
-      color: { value: "#ffffff" },
-      shape: { type: "circle" },
-      opacity: { value: 0.5 },
-      size: { value: { min: 1, max: 4 } },
-      links: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-      move: { enable: true, speed: 1, direction: "none", straight: false, outModes: "out" }
+      number: { value: 50, density: { enable: true, area: 900 } },
+      color: { value: ["#00f2ff", "#ff00f2", "#00ff9f"] },
+      shape: { type: ["circle","triangle","polygon"] },
+      opacity: { value: 0.6, random: { enable: true, minimumValue: 0.3 } },
+      size: { value: { min: 2, max: 5 }, random: true },
+      links: { enable: true, distance: 150, color: "#ffffff", opacity: 0.2, width: 1.2 },
+      move: { enable: true, speed: 1.2, direction: "none", straight: false, outModes: { default: "out" } }
+    },
+    interactivity: {
+      events: { onHover: { enable: true, mode: "repulse" }, onClick: { enable: true, mode: "push" } },
+      modes: { repulse: { distance: 120 }, push: { quantity: 4 } }
     },
     detectRetina: true
   };
+
+  ngAfterViewInit() {
+    const options = {
+      strings: [
+        'Ingeniera en Sistemas Computacionales',
+        'Desarrolladora Web Frontend & Backend',
+        'Inteligencia Artificial',
+        'Data Analyst'
+      ],
+      typeSpeed: 50,
+      backSpeed: 30,
+      loop: true
+    };
+    new Typed('#typed-title', options);
+  }
 }

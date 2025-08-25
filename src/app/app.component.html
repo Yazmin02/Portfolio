@@ -1,65 +1,58 @@
-<header>
-  <nav class="container mx-auto flex justify-between items-center py-4 px-6">
-    <div class="logo">Yazmín B. González</div>
+<!-- Preloader -->
+<app-loading *ngIf="isLoading" (finished)="onLoadingFinished()"></app-loading>
 
-    <button class="hamburger md:hidden" (click)="toggleMenu()" aria-label="Toggle Menu">
-      <svg *ngIf="!menuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-      <svg *ngIf="menuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
+<!-- Contenido principal -->
+<div *ngIf="!isLoading">
+  <header>
+    <nav>
+      <div class="logo" (click)="scrollToSection('about')">Yazmín B. González</div>
 
-    <ul [ngClass]="{
-          'hidden md:flex': true,
-          'flex flex-col md:flex-row absolute md:static top-16 left-0 w-full bg-gray-900 md:bg-transparent transition-all duration-300': menuOpen
-        }">
-      <li *ngFor="let section of sections" class="md:mx-3">
-        <a (click)="scrollToSection(section.id); closeMenu()"
-           [ngClass]="{
-             'text-indigo-400': activeSection === section.id,
-             'hover:text-indigo-400': true,
-             'cursor-pointer': true,
-             'block py-2 px-4 md:p-0': true
-           }">
-          {{ section.label }}
-        </a>
-      </li>
-    </ul>
-  </nav>
-</header>
+      <button class="hamburger" (click)="toggleMenu()" aria-label="Toggle Menu">
+        <svg *ngIf="!menuOpen" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg *ngIf="menuOpen" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
 
-<main>
-  <section id="about" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-50 to-gray-100">
-    <app-hero></app-hero>
-  </section>
+      <ul [ngClass]="{'mobile-menu': true, 'open': menuOpen, 'desktop-menu': true}">
+        <li *ngFor="let section of sections">
+          <a (click)="scrollToSection(section.id)" [class.active]="activeSection === section.id">
+            {{ section.label }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-  <section id="education" class="container mx-auto py-16">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800"></h2>
-    <app-education></app-education>
-  </section>
+  <main>
+    <section id="about" class="min-h-screen flex items-center justify-center">
+      <app-hero></app-hero>
+    </section>
 
-  <section id="skills" class="bg-gray-100 py-16">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800 container mx-auto"></h2>
-    <app-skills></app-skills>
-  </section>
+    <section id="education">
+      <app-education></app-education>
+    </section>
 
-  <section id="projects" class="container mx-auto py-16">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800"></h2>
-    <app-projects></app-projects>
-  </section>
+    <section id="skills">
+      <app-skills></app-skills>
+    </section>
 
-  <section id="contact" class="bg-gray-100 py-16">
-    <h2 class="text-3xl font-bold mb-6 text-gray-800 container mx-auto"></h2>
-    <app-contact></app-contact>
-  </section>
-</main>
+    <section id="projects">
+      <app-projects></app-projects>
+    </section>
 
-<footer class="bg-gray-900 text-white py-6 text-center">
-  <p>© 2025 Yazmín Berenice González Meneses. Todos los derechos reservados.</p>
-</footer>
+    <section id="contact">
+      <app-contact></app-contact>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Yazmín Berenice González Meneses. Todos los derechos reservados.</p>
+  </footer>
+</div>

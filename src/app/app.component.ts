@@ -5,6 +5,7 @@ import { EducationComponent } from './components/education/education.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { LoadingComponent } from "./components/loading/loading.component";
 
 interface Section {
   id: string;
@@ -20,8 +21,9 @@ interface Section {
     EducationComponent,
     SkillsComponent,
     ProjectsComponent,
-    ContactComponent
-  ],
+    ContactComponent,
+    LoadingComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -33,6 +35,13 @@ export class AppComponent {
     { id: 'projects', label: 'Proyectos' },
     { id: 'contact', label: 'Contacto' }
   ];
+
+
+  isLoading = true;
+
+  // Esta función se dispara cuando el LoadingComponent termina la animación
+  onLoadingFinished() {
+    this.isLoading = false;}
 
   menuOpen = false;
   activeSection = 'about';
@@ -46,9 +55,14 @@ export class AppComponent {
   }
 
   scrollToSection(id: string) {
+  if (typeof document !== 'undefined') {  // 🔹 chequeo
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
+  this.activeSection = id;
+  this.closeMenu();
+}
+
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

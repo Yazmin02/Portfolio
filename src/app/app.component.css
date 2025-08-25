@@ -1,88 +1,142 @@
+/* Reset y tipografía */
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
   scroll-behavior: smooth;
+  background: #f9fafb; /* Fondo claro elegante */
+  color: #111827;
 }
 
+/* Header moderno */
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  background: #1f2937;
+  background: rgba(31,41,55,0.95);
+  backdrop-filter: blur(8px);
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
 
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
+header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
 
-    .logo {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #fff;
-    }
+header nav .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
 
-    ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+header nav .hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+header nav .hamburger svg {
+  width: 1.5rem; 
+  height: 1.5rem; 
+  color: #fff; 
+}
 
-      li {
-        margin: 0 0.75rem;
-
-        a {
-          text-decoration: none;
-          color: #fff;
-          font-weight: 500;
-          position: relative;
-
-          &:hover {
-            color: #6366f1;
-          }
-
-          &.active::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 100%;
-            height: 2px;
-            background-color: #6366f1;
-            border-radius: 2px;
-          }
-        }
-      }
-    }
-
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      svg { color: #fff; }
-
-      @media (max-width: 768px) {
-        display: block;
-      }
-    }
+@media (max-width: 768px) {
+  header nav .hamburger {
+    display: block;
   }
 }
 
-main {
-  padding-top: 80px;
+header nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
 }
 
+header nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+  color: #a5b4fc; /* Azul claro hover */
+}
+
+header nav ul li a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background-color: #6366f1; /* Azul violeta */
+  border-radius: 2px;
+}
+
+/* Menú móvil */
+header nav ul.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  background: #1f2937;
+  padding: 1rem 0;
+  gap: 1rem;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  transform: translateY(-100%);
+}
+
+header nav ul.mobile-menu.open {
+  display: flex;
+  transform: translateY(0);
+}
+
+header nav ul.mobile-menu li a {
+  color: #fff;
+  padding: 0.5rem 2rem;
+  display: block;
+}
+
+@media (min-width: 769px) {
+  header nav ul.mobile-menu {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    background: transparent;
+    transform: none;
+    gap: 2rem;
+  }
+}
+
+/* Ajuste main para compensar header */
+main {
+  padding-top: 64px;
+}
+
+/* Secciones */
 section {
   padding: 4rem 2rem;
 }
 
+/* Footer */
 footer {
   text-align: center;
-  padding: 1.5rem;
+  padding: 2rem;
   background: #111827;
   color: #fff;
 }

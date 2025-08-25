@@ -17,7 +17,7 @@ interface Project {
 export class ProjectsComponent {
   projects: Project[] = [
     {
-      title: 'App de gestión de tiempo (Trabajo Terminal)',
+      title: 'App de gestión de tiempo (Android)',
       description: 'Aplicación nativa en Kotlin con MVVM, calendario, Pomodoro, reportes de productividad, colaboración y gamificación.',
       technologies: 'Kotlin, Android SDK, MVVM, SQLite, Jetpack'
     },

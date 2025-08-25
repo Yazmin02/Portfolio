@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST_FOLDER = join(__dirname, 'dist/portafolio/browser');
 const SERVER_FOLDER = join(__dirname, 'dist/portafolio/server');
 
-// Importar el bundle del servidor usando file://
+// Importar bundle del servidor
 const { AppServerModuleNgFactory, renderModule } = await import(
   pathToFileURL(join(SERVER_FOLDER, 'main.server.mjs')).href
 );
