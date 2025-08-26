@@ -1,57 +1,53 @@
 <!-- Preloader -->
 <app-loading *ngIf="isLoading" (finished)="onLoadingFinished()"></app-loading>
 
-<!-- Contenido principal -->
 <div *ngIf="!isLoading">
-  <header>
-    <nav>
-      <div class="logo" (click)="scrollToSection('about')">Yazmín B. González</div>
+  <!-- Botón menú flotante -->
+  <button class="menu-btn" (click)="toggleMenu()">☰</button>
 
-      <button class="hamburger" (click)="toggleMenu()" aria-label="Toggle Menu">
-        <svg *ngIf="!menuOpen" xmlns="http://www.w3.org/2000/svg" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-        <svg *ngIf="menuOpen" xmlns="http://www.w3.org/2000/svg" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
+  <!-- Menú flotante desplegable -->
+  <div class="floating-menu" [class.open]="menuOpen">
+    <a *ngFor="let section of sections" 
+       (click)="scrollToSection(section.id)"
+       [class.active]="activeSection === section.id">
+      {{ section.label }}
+    </a>
+  </div>
 
-      <ul [ngClass]="{'mobile-menu': true, 'open': menuOpen, 'desktop-menu': true}">
-        <li *ngFor="let section of sections">
-          <a (click)="scrollToSection(section.id)" [class.active]="activeSection === section.id">
-            {{ section.label }}
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
+  <!-- Contenedor horizontal con scroll vertical -->
   <main>
-    <section id="about" class="min-h-screen flex items-center justify-center">
+    <section id="about" class="fade-in">
       <app-hero></app-hero>
     </section>
 
-    <section id="education">
+    <section id="education" class="fade-in">
       <app-education></app-education>
     </section>
 
-    <section id="skills">
+    <section id="skills" class="fade-in">
       <app-skills></app-skills>
     </section>
 
-    <section id="projects">
+    <section id="projects" class="fade-in">
       <app-projects></app-projects>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="fade-in">
       <app-contact></app-contact>
     </section>
   </main>
 
+  <!-- Indicadores de navegación -->
+  <div class="nav-indicators">
+    <div *ngFor="let section of sections; let i = index" 
+         class="nav-dot" 
+         [class.active]="activeSection === section.id"
+         (click)="scrollToSection(section.id)"
+         [title]="section.label">
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer>
     <p>© 2025 Yazmín Berenice González Meneses. Todos los derechos reservados.</p>
   </footer>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 interface Skill {
   name: string;
-  icon: string; // emoji o texto representativo
+  icon: string; // ruta relativa a /assets/icons/
   description: string;
 }
 
@@ -21,22 +21,21 @@ interface SkillCategory {
 })
 export class SkillsComponent {
   skillCategories: SkillCategory[] = [
-  {
-    category: '',
-    skills: [
-      { name: 'Python', icon: '🐍', description: 'Análisis de datos e Inteligencia Artificial' },
-      { name: 'Java', icon: '☕', description: 'Desarrollo' },
-      { name: 'Kotlin', icon: '🤖', description: 'Desarrollo' },
-      { name: 'JavaScript', icon: 'JS', description: 'Web' },
-      { name: 'React', icon: '⚛️', description: 'Interfaces dinámicas' },
-      { name: 'HTML', icon: '🌐', description: 'Estructuras web' },
-      { name: 'CSS', icon: '🎨', description: 'Estilos, animaciones y responsive design' },
-      { name: 'Node.js', icon: '🟢', description: 'Backend' },
-      { name: 'PostgreSQL', icon: '🐘', description: 'Bases de datos relacionales' },
-      { name: 'MySQL', icon: '🐬', description: 'Bases de datos y consultas avanzadas' },
-      { name: 'SQLite', icon: '🗄️', description: 'Bases de datos locales' }
-    ]
-  }
+    {
+      category: 'Tech Skills',
+      skills: [
+        { name: 'Python', icon: 'assets/icons/python.png', description: 'Análisis de datos e Inteligencia Artificial' },
+        { name: 'Java', icon: 'assets/icons/java.png', description: 'Desarrollo de software' },
+        { name: 'Kotlin', icon: 'assets/icons/kotlin.png', description: 'Desarrollo móvil Android' },
+        { name: 'JavaScript', icon: 'assets/icons/js.png', description: 'Programación Web' },
+        { name: 'React', icon: 'assets/icons/react.png', description: 'Interfaces dinámicas' },
+        { name: 'HTML', icon: 'assets/icons/html.png', description: 'Estructuras web' },
+        { name: 'CSS', icon: 'assets/icons/css.png', description: 'Estilos, animaciones y responsive design' },
+        { name: 'Node.js', icon: 'assets/icons/node.png', description: 'Backend y APIs' },
+        { name: 'PostgreSQL', icon: 'assets/icons/postgresql.png', description: 'Bases de datos relacionales' },
+        { name: 'MySQL', icon: 'assets/icons/mysql.png', description: 'Bases de datos y consultas avanzadas' },
+        { name: 'SQLite', icon: 'assets/icons/sqlite.png', description: 'Bases de datos locales' }
+      ]
+    }
   ];
-
 }

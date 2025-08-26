@@ -1,142 +1,371 @@
-/* Reset y tipografía */
-body, html {
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden; /* Permitir scroll vertical, bloquear horizontal */
+  overflow-y: scroll;
+  height: 100%;
   scroll-behavior: smooth;
-  background: #f9fafb; /* Fondo claro elegante */
-  color: #111827;
+  background: #f9fafb;
 }
 
-/* Header moderno */
-header {
+/* Contenedor horizontal fijo */
+main {
+  display: flex;
+  flex-direction: row;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  background: rgba(31,41,55,0.95);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-header nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-header nav .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  cursor: pointer;
-}
-
-header nav .hamburger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-header nav .hamburger svg {
-  width: 1.5rem; 
-  height: 1.5rem; 
-  color: #fff; 
-}
-
-@media (max-width: 768px) {
-  header nav .hamburger {
-    display: block;
-  }
-}
-
-header nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 2rem;
-}
-
-header nav ul li a {
-  text-decoration: none;
-  color: #fff;
-  font-weight: 500;
-  position: relative;
-  transition: color 0.3s;
-}
-
-header nav ul li a:hover {
-  color: #a5b4fc; /* Azul claro hover */
-}
-
-header nav ul li a.active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 100%;
-  height: 2px;
-  background-color: #6366f1; /* Azul violeta */
-  border-radius: 2px;
-}
-
-/* Menú móvil */
-header nav ul.mobile-menu {
-  display: none;
-  flex-direction: column;
-  position: fixed;
-  top: 64px;
-  left: 0;
-  width: 100%;
-  background: #1f2937;
-  padding: 1rem 0;
-  gap: 1rem;
-  z-index: 999;
-  transition: transform 0.3s ease;
-  transform: translateY(-100%);
-}
-
-header nav ul.mobile-menu.open {
-  display: flex;
-  transform: translateY(0);
-}
-
-header nav ul.mobile-menu li a {
-  color: #fff;
-  padding: 0.5rem 2rem;
-  display: block;
-}
-
-@media (min-width: 769px) {
-  header nav ul.mobile-menu {
-    display: flex !important;
-    flex-direction: row;
-    position: static;
-    background: transparent;
-    transform: none;
-    gap: 2rem;
-  }
-}
-
-/* Ajuste main para compensar header */
-main {
-  padding-top: 64px;
+  height: 100vh;
+  width: max-content; /* ancho según número de secciones */
+  transition: transform 0.1s linear;
 }
 
 /* Secciones */
 section {
-  padding: 4rem 2rem;
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* Sin padding para usar toda la pantalla */
+  position: relative;
+  /* Removemos overflow-y para no bloquear animaciones */
 }
 
 /* Footer */
 footer {
   text-align: center;
-  padding: 2rem;
-  background: #111827;
+  padding: 0.8rem;
+  background: #434343;
   color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  font-size: 0.8rem;
 }
+
+/* Animación fade-in */
+.fade-in {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible { 
+  opacity: 1; 
+  transform: translateX(0); 
+}
+
+/* Botón menú flotante responsivo */
+.menu-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+/* Menú flotante desplegable */
+.floating-menu {
+  position: fixed;
+  top: 70px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  min-width: 150px;
+}
+
+.floating-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.floating-menu a {
+  display: block;
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  color: #333;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.floating-menu a:hover {
+  background: rgba(179, 205, 224, 0.3);
+  transform: translateX(3px);
+}
+
+.floating-menu a.active {
+  background: #b3cde0;
+  color: #222;
+  font-weight: 600;
+}
+
+
+
+/* Indicadores de navegación responsivos */
+.nav-indicators {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.nav-dot.active {
+  background: #b3cde0;
+  border-color: #fff;
+  transform: scale(1.2);
+}
+
+.nav-dot:hover {
+  background: rgba(179, 205, 224, 0.6);
+  transform: scale(1.1);
+}
+
+/* Asegurar que las animaciones funcionen correctamente */
+section * {
+  will-change: auto;
+}
+
+/* Optimizar rendimiento de animaciones */
+.fade-in {
+  will-change: opacity, transform;
+}
+
+/* Asegurar que los componentes hijos usen toda la pantalla */
+section app-hero,
+section app-education,
+section app-skills,
+section app-projects,
+section app-contact {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenedor interno para scroll cuando sea necesario */
+.scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ocultar scrollbar en contenedores internos pero mantener funcionalidad */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(179, 205, 224, 0.5);
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(179, 205, 224, 0.8);
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+  .menu-btn {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.15rem;
+  }
+
+  .floating-menu {
+    top: 65px;
+    right: 12px;
+    min-width: 140px;
+  }
+
+  .floating-menu a {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-indicators {
+    bottom: 65px;
+    gap: 7px;
+  }
+
+  .nav-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  footer {
+    padding: 0.7rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* Responsive para tablets */
+@media (max-width: 768px) {
+  .menu-btn {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  .floating-menu {
+    top: 60px;
+    right: 10px;
+    min-width: 130px;
+  }
+
+  .floating-menu a {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-indicators {
+    bottom: 60px;
+    gap: 6px;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  footer {
+    padding: 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Responsive para móviles grandes */
+@media (max-width: 480px) {
+  .menu-btn {
+    top: 8px;
+    right: 8px;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .floating-menu {
+    top: 50px;
+    right: 8px;
+    min-width: 120px;
+  }
+
+  .floating-menu a {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .nav-indicators {
+    bottom: 50px;
+    gap: 5px;
+  }
+
+  .nav-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  footer {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 360px) {
+  .menu-btn {
+    top: 6px;
+    right: 6px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .floating-menu {
+    top: 45px;
+    right: 6px;
+    min-width: 110px;
+  }
+
+  .floating-menu a {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .nav-indicators {
+    bottom: 45px;
+    gap: 4px;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  footer {
+    padding: 0.4rem;
+    font-size: 0.65rem;
+  }
+}
+
+

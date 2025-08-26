@@ -1,7 +1,21 @@
 .skills {
-  padding: 4rem 2rem;
-  text-align: center;
+  width: 100%;
+  height: 100vh;
   background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .scroll-container {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   h2 {
     font-size: 2.5rem;
@@ -12,6 +26,8 @@
 
   .skill-category {
     margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1200px;
 
     .category-title {
       font-size: 1.8rem;
@@ -25,7 +41,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1.5rem;
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -38,7 +54,7 @@
         position: relative;
         width: 100%;
         height: 100%;
-        transition: transform 0.6s;
+        transition: transform 0.6s ease-in-out;
         transform-style: preserve-3d;
       }
 
@@ -46,7 +62,8 @@
         transform: rotateY(180deg);
       }
 
-      .card-front, .card-back {
+      .card-front,
+      .card-back {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -58,25 +75,28 @@
         justify-content: center;
         padding: 1rem;
         box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-        transition: box-shadow 0.3s;
+        transition: all 0.3s ease-in-out;
       }
 
       .card-front {
-        background: #f5f5f5;
+        background: #ffffff;
         color: #1a237e;
       }
 
       .card-back {
-        background: #3f51b5;
-        color: white;
+        background: #b3cde0;
+        color: #222;
         transform: rotateY(180deg);
         font-size: 0.85rem;
         text-align: center;
+        padding: 0.5rem;
       }
 
       .skill-icon {
-        font-size: 2.5rem;
+        width: 50px;
+        height: 50px;
         margin-bottom: 0.5rem;
+        object-fit: contain;
       }
 
       .skill-name {
@@ -87,26 +107,126 @@
 
       .skill-description {
         font-size: 0.85rem;
-        padding: 0 0.5rem;
+        line-height: 1.3;
       }
     }
   }
-}
 
-// Responsivo
-@media (max-width: 768px) {
-  .skills .skills-grid {
-    gap: 1rem;
-  }
-  .skill-card {
-    width: 120px;
-    height: 150px;
-  }
-}
+  // Responsive para tablets
+  @media (max-width: 1024px) {
+    .scroll-container {
+      padding: 1.5rem;
+    }
+    
+    h2 {
+      font-size: 2.2rem;
+    }
 
-@media (max-width: 480px) {
-  .skill-card {
-    width: 100px;
-    height: 140px;
+    .skill-category {
+      .category-title {
+        font-size: 1.6rem;
+      }
+
+      .skills-grid {
+        gap: 1.2rem;
+      }
+
+      .skill-card {
+        width: 130px;
+        height: 150px;
+      }
+    }
+  }
+
+  // Responsive para tablets
+  @media (max-width: 768px) {
+    .scroll-container {
+      padding: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-category {
+      margin-bottom: 2rem;
+
+      .category-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .skills-grid {
+        gap: 1rem;
+      }
+
+      .skill-card {
+        width: 120px;
+        height: 140px;
+
+        .skill-icon {
+          width: 45px;
+          height: 45px;
+        }
+
+        .skill-name {
+          font-size: 0.9rem;
+        }
+
+        .skill-description {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+  // Responsive para móviles
+  @media (max-width: 480px) {
+    .scroll-container {
+      padding: 0.8rem;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-category {
+      margin-bottom: 1.5rem;
+
+      .category-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .skills-grid {
+        gap: 0.8rem;
+      }
+
+      .skill-card {
+        width: 100px;
+        height: 120px;
+
+        .card-front,
+        .card-back {
+          padding: 0.8rem;
+        }
+
+        .skill-icon {
+          width: 40px;
+          height: 40px;
+          margin-bottom: 0.3rem;
+        }
+
+        .skill-name {
+          font-size: 0.8rem;
+        }
+
+        .skill-description {
+          font-size: 0.75rem;
+        }
+      }
+    }
   }
 }

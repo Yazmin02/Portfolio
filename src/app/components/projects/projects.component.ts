@@ -1,46 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, QueryList, ViewChildren, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Project {
   title: string;
   description: string;
   technologies: string;
+  github: string;
 }
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss'],
   standalone: true,
   imports: [CommonModule],
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.scss'],
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements AfterViewInit {
   projects: Project[] = [
     {
-      title: 'App de gestión de tiempo (Android)',
-      description: 'Aplicación nativa en Kotlin con MVVM, calendario, Pomodoro, reportes de productividad, colaboración y gamificación.',
-      technologies: 'Kotlin, Android SDK, MVVM, SQLite, Jetpack'
-    },
-    {
-      title: 'App de monitoreo IoT (Android)',
-      description: 'Desarrollo para monitoreo en tiempo real de sensores conectados.',
-      technologies: 'Kotlin, Android SDK, SQLite, Jetpack'
+      title: 'IoT Monitoring App',
+      description: 'Monitoreo en tiempo real de sensores conectados.',
+      technologies: 'Kotlin, Android SDK, SQLite, Jetpack',
+      github: 'https://github.com/Yazmin02/IOTapp'
     },
     {
       title: 'Optimización de rutas logísticas',
-      description: 'Algoritmo PSO con método DEB para mejorar asignación de rutas con restricciones.',
-      technologies: 'Python'
+      description: 'Algoritmo PSO con método DEB para mejorar asignación de rutas.',
+      technologies: 'Python',
+      github: 'https://github.com/Yazmin02/PSO'
     },
     {
-      title: 'Desarrollo backend',
-      description: 'Implementación de APIs RESTful para soporte de aplicaciones frontend y móviles.',
-      technologies: 'Spring Boot, PHP'
-    },
-    {
-      title: 'Desarrollo backend',
-      description: 'Implementación de APIs RESTful para soporte de aplicaciones frontend y móviles.',
-      technologies: 'Spring Boot, PHP'
-    },
-    
+      title: 'Backend para gestión de tiempo',
+      description: 'APIs RESTful para la app de gestión de tiempo.',
+      technologies: 'Spring Boot, Kotlin, SQLite',
+      github: 'https://github.com/Yazmin02/systimebackend'
+    }
   ];
+
+  @ViewChildren('projCard') projCards!: QueryList<ElementRef>;
+
+  ngAfterViewInit() {
+    // Animación de entrada
+    this.projCards.forEach((card, index) => {
+      setTimeout(() => {
+        card.nativeElement.classList.add('visible');
+      }, index * 200); // delay escalonado
+    });
+  }
 }

@@ -1,9 +1,22 @@
 <section class="contact">
   <h2>Contacto</h2>
+  <p class="contact-legend">¿Tienes alguna consulta o proyecto? ¡Envíame un mensaje y te responderé lo antes posible!</p>
 
-  <div class="contact-info">
-    <p>📧 Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
-    <p>📞 Teléfono: <a href="tel:{{ phone }}">{{ phone }}</a></p>
-    <p>💻 GitHub: <a href="{{ github }}" target="_blank" rel="noopener">{{ github }}</a></p>
+  <div class="contact-wrapper">
+    <!-- Formulario -->
+    <form [formGroup]="contactForm" (ngSubmit)="sendEmail()" class="contact-form">
+      <input formControlName="name" type="text" placeholder="Nombre" required>
+      <input formControlName="email" type="email" placeholder="Correo electrónico" required>
+      <input formControlName="subject" type="text" placeholder="Asunto" required>
+      <textarea formControlName="message" rows="5" placeholder="Mensaje" required></textarea>
+      <button type="submit" [disabled]="contactForm.invalid">Enviar</button>
+    </form>
+
+    <!-- Información adicional con iconos PNG -->
+    <div class="contact-info">
+      <p><img src="assets/icons/outlook.png" alt="Email"> <a href="mailto:{{ email }}">{{ email }}</a></p>
+      <p><img src="assets/icons/phone.png" alt="Teléfono"> <a href="tel:{{ phone }}">{{ phone }}</a></p>
+      <p><img src="assets/icons/git.png" alt="GitHub"> <a href="{{ github }}" target="_blank" rel="noopener">{{ github }}</a></p>
+    </div>
   </div>
 </section>
