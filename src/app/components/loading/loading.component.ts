@@ -1,14 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-interface Particle {
-  x: number;
-  y: number;
-  dx: string;
-  dy: string;
-  size: number;
-  opacity: number;
-}
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-loading',
@@ -17,49 +8,59 @@ interface Particle {
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit, OnDestroy {
   @Output() finished = new EventEmitter<void>();
 
   progress = 0;
   showName = false;
   finishedAnimation = false;
-  particles: Particle[] = [];
+  private intervalId: any;
+  private timeoutIds: any[] = [];
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    const interval = setInterval(() => {
+    if (!isPlatformBrowser(this.platformId)) {
+      // En el servidor, emitir finished inmediatamente
+      this.finished.emit();
+      return;
+    }
+    
+    // Iniciar loading directamente
+    this.startLoading();
+  }
+
+  private startLoading() {
+    this.intervalId = setInterval(() => {
       if (this.progress < 100) {
         this.progress++;
-        this.addParticle();
+        this.cdr.detectChanges();
       } else {
-        clearInterval(interval);
-        setTimeout(() => {
+        clearInterval(this.intervalId);
+        this.timeoutIds.push(setTimeout(() => {
           this.showName = true;
-          setTimeout(() => this.triggerFinish(), 800); // animación de salida
-        }, 300);
+          this.cdr.detectChanges();
+          this.timeoutIds.push(setTimeout(() => this.triggerFinish(), 800));
+        }, 300));
       }
     }, 30);
   }
 
-  addParticle() {
-    const dx = (Math.random() * 60 - 30) + 'px';
-    const dy = (Math.random() * -50 - 20) + 'px'; // siempre sube
-    const size = Math.random() * 6 + 4; // 4px a 10px
-    const opacity = Math.random() * 0.8 + 0.2;
-
-    this.particles.push({
-      x: 50 + (Math.random() * 60 - 30),
-      y: 0,
-      dx,
-      dy,
-      size,
-      opacity
-    });
-
-    if (this.particles.length > 80) this.particles.shift();
+  triggerFinish() {
+    this.finishedAnimation = true;
+    this.cdr.detectChanges();
+    this.timeoutIds.push(setTimeout(() => {
+      this.finished.emit();
+    }, 1000));
   }
 
-  triggerFinish() {
-    this.finishedAnimation = true; // activa animación de salida global
-    setTimeout(() => this.finished.emit(), 1000); // luego de animación, se muestra app
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    this.timeoutIds.forEach(id => clearTimeout(id));
   }
 }

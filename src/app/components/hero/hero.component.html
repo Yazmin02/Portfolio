@@ -2,23 +2,22 @@
   <ng-particles [id]="'tsparticles'" [options]="particlesOptions"></ng-particles>
   <div class="overlay"></div>
 
+
   <div class="cards-container" [class.two-columns]="showRightCards">
-    <!-- Card del nombre -->
     <div class="left-card card name-card" #leftCard [class.shift-left]="showRightCards">
       <h1>{{ name }}</h1>
     </div>
-
-    <!-- Cards de la derecha -->
+  
     <div class="right-cards" #rightCards [class.visible]="showRightCards">
       <div class="card title-card">
         <h2 #typedElement></h2>
       </div>
-
       <div class="card description-card">
         <p>{{ description }}</p>
       </div>
     </div>
   </div>
+  
 
   <!-- Scroll indicator -->
   <div class="scroll-down">

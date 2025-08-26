@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, HostListener, Inject, PLATFORM_ID, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HeroComponent } from './components/hero/hero.component';
 import { EducationComponent } from './components/education/education.component';
@@ -24,7 +24,7 @@ interface Section { id: string; label: string; }
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
   sections: Section[] = [
     { id: 'about', label: 'Inicio' },
     { id: 'education', label: 'Educación' },
@@ -36,16 +36,24 @@ export class AppComponent implements AfterViewInit {
   isLoading = true;
   menuOpen = false;
   activeSection = 'about';
+  private observer: IntersectionObserver | null = null;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
+    // Inicializar directamente sin requestAnimationFrame para evitar problemas
+    this.initializeApp();
+  }
+
+  private initializeApp(): void {
     const main = document.querySelector('main') as HTMLElement;
 
     // Ajustamos altura del body para permitir scroll vertical que mueva horizontal
-    // Calculamos la altura exacta basada en el número de secciones
     if (main) {
       const sectionCount = this.sections.length;
       const viewportWidth = window.innerWidth;
@@ -56,7 +64,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     // IntersectionObserver para fade-in
-    const observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
@@ -69,12 +77,21 @@ export class AppComponent implements AfterViewInit {
     
     // Observar las secciones después de un pequeño delay para asegurar que estén renderizadas
     setTimeout(() => {
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+      if (this.observer) {
+        document.querySelectorAll('.fade-in').forEach(el => this.observer!.observe(el));
+      }
     }, 100);
   }
 
-  onLoadingFinished() { this.isLoading = false; }
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
+  onLoadingFinished() { 
+    this.isLoading = false; 
+    this.cdr.detectChanges();
+  }
+  
+  toggleMenu() { 
+    this.menuOpen = !this.menuOpen; 
+    this.cdr.detectChanges();
+  }
 
   scrollToSection(id: string) {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -85,6 +102,7 @@ export class AppComponent implements AfterViewInit {
     }
     this.activeSection = id;
     this.menuOpen = false;
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -120,6 +138,7 @@ export class AppComponent implements AfterViewInit {
       const el = document.getElementById(section.id);
       if (el && el.offsetLeft <= scrollPos && (el.offsetLeft + el.offsetWidth) > scrollPos) {
         this.activeSection = section.id;
+        this.cdr.detectChanges();
       }
     }
   }
@@ -136,6 +155,12 @@ export class AppComponent implements AfterViewInit {
       const totalWidth = sectionCount * viewportWidth;
       
       document.body.style.height = `${totalWidth - window.innerHeight}px`;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 }

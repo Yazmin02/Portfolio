@@ -8,14 +8,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   /* Removemos overflow-y: auto para no bloquear animaciones */
 
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #848eff;
-    font-weight: 700;
-  }
+
 
   .projects-grid {
     display: grid;
@@ -89,10 +85,6 @@
   // Responsive para tablets
   @media (max-width: 1024px) {
     padding: 1.5rem;
-    
-    h2 {
-      font-size: 2.2rem;
-    }
 
     .projects-grid {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -116,11 +108,6 @@
   // Responsive para tablets
   @media (max-width: 768px) {
     padding: 1rem;
-    
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
 
     .projects-grid {
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -155,11 +142,6 @@
   // Responsive para móviles
   @media (max-width: 480px) {
     padding: 0.8rem;
-    
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
 
     .projects-grid {
       grid-template-columns: 1fr;

@@ -3,6 +3,7 @@
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
@@ -22,6 +23,20 @@
     z-index: 2;
   }
 
+  .component-title {
+    z-index: 4;
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    color: #1a237e;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
+    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+
   .cards-container {
     display: flex;
     flex-direction: column;  
@@ -30,9 +45,10 @@
     width: 100%;
     max-width: 1200px;
     gap: 2rem;
-    transition: all 1s ease;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 3;
     position: relative;
+    flex: 1;
 
     &.two-columns {
       flex-direction: row;
@@ -80,16 +96,18 @@
   .right-cards {
     opacity: 0;
     transform: translateX(50px);
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
     max-width: 600px;
+    visibility: hidden;
 
     &.visible {
       opacity: 1;
       transform: translateX(0);
+      visibility: visible;
     }
 
     .card {
@@ -140,6 +158,10 @@
   @media (max-width: 1024px) {
     padding: 1.5rem;
     
+    .component-title {
+      top: 2.5rem;
+    }
+    
     .cards-container.two-columns {
       gap: 2rem;
       
@@ -161,6 +183,11 @@
 
   @media (max-width: 768px) {
     padding: 1rem;
+    
+    .component-title {
+      top: 2rem;
+      padding: 0 1rem;
+    }
     
     .cards-container.two-columns {
       flex-direction: column;
@@ -194,6 +221,11 @@
 
   @media (max-width: 480px) {
     padding: 0.8rem;
+    
+    .component-title {
+      top: 1.5rem;
+      padding: 0 0.8rem;
+    }
     
     .cards-container {
       gap: 1rem;

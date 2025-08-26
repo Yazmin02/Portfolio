@@ -9,19 +9,6 @@
       {{ progress }}%
     </span>
 
-    <!-- Partículas -->
-    <div *ngFor="let p of particles" 
-         class="particle" 
-         [style.left.%]="p.x"
-         [style.top.px]="p.y"
-         [style.width.px]="p.size"
-         [style.height.px]="p.size"
-         [style.opacity]="p.opacity"
-         [style.--dx]="p.dx + 'px'"
-         [style.--dy]="p.dy + 'px'"
-         [class.explode]="finishedAnimation">
-    </div>
-
     <!-- Nombre -->
     <span class="loading-text" 
       *ngIf="showName"

@@ -7,25 +7,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-    color: #2e2f34;
-    position: relative;
 
-    &::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: #8b8d97;
-      margin: 0.5rem auto 0;
-      border-radius: 2px;
-    }
-  }
 
   .edu-grid {
     display: grid;
@@ -95,10 +79,6 @@
   // Responsive para tablets
   @media (max-width: 1024px) {
     padding: 1.5rem;
-    
-    h2 {
-      font-size: 2.2rem;
-    }
 
     .edu-grid {
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -123,11 +103,6 @@
   // Responsive para tablets
   @media (max-width: 768px) {
     padding: 1rem;
-    
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
 
     .edu-grid {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -166,11 +141,6 @@
   // Responsive para móviles
   @media (max-width: 480px) {
     padding: 0.8rem;
-    
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
 
     .edu-grid {
       grid-template-columns: 1fr;

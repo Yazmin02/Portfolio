@@ -40,6 +40,11 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
+            },
+            "optimization": {
+              "scripts": true,
+              "styles": true,
+              "fonts": true
             }
           },
           "configurations": {
