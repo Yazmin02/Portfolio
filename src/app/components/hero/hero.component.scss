@@ -4,12 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-
-  // Quitamos cualquier fondo (no azul, no gradiente)
-  background: none;
+  background: #f5f5f5;
 
   ng-particles {
     position: absolute;
@@ -20,52 +17,151 @@
   .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.0); // overlay transparente
+    background: rgba(0,0,0,0);
     z-index: 2;
   }
 
-  .content {
-    position: relative;
-    z-index: 3;
-    max-width: 750px;
-    padding: 2rem;
-    animation: fadeIn 1.5s ease-in-out;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  .cards-container {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 1000px;
+    gap: 2rem;
+    transition: all 1s ease;
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 900;
-      margin-bottom: 0.5rem;
-      color: #000000;
-      transition: transform 0.5s ease;
-      &:hover { transform: scale(1.05); }
-    }
+    &.two-columns {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2rem;
 
-    h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      margin-bottom: 1rem;
-      color: #00073e;
-      font-weight: 500;
-    }
-
-    p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #2000a1;
-      margin-bottom: 2rem;
+      .left-card,
+      .right-cards {
+        width: 45%;
+        max-width: 400px;
+      }
     }
   }
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  .left-card {
+    background: linear-gradient(135deg, #bbbbbb, #c0daff);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    color: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    padding: 2rem;
+    width: 80%;
+    text-align: center;
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-// Responsivo móvil
-@media (max-width: 480px) {
-  .content h1 { font-size: 2rem; }
-  .content h2 { font-size: 1.2rem; }
-  .content p  { font-size: 1rem; }
-  .content { padding: 1rem; }
+    &.shift-left {
+      transform: translateX(-50px);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 6px rgba(255,255,255,0.2);
+    }
+  }
+
+  .right-cards {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 1s ease, transform 1s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .card {
+      background: #ffffff;
+      color: #222222;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      border-top: 4px solid #b3cde0;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: all 0.5s ease;
+
+      &:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #444444;
+        min-height: 2.2rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: #555555;
+      }
+    }
+  }
+
+  // Left card same height as right cards
+  .two-columns .left-card {
+    height: calc(2 * (120px + 1rem));
+    max-height: 320px;
+  }
+
+  // Gradient animation
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  
+
+  // Responsive
+  @media (max-width: 768px) {
+    .cards-container.two-columns {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .left-card,
+    .right-cards {
+      width: 90%;
+      max-width: 90%;
+    }
+
+    .left-card.shift-left {
+      transform: translateX(0);
+      height: auto;
+    }
+
+    .right-cards .card {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .left-card h1 {
+      font-size: 1.6rem;
+    }
+
+    .right-cards .card h2 {
+      font-size: 1.1rem;
+    }
+
+    .right-cards .card p {
+      font-size: 0.9rem;
+    }
+  }
 }

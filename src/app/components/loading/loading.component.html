@@ -1,22 +1,31 @@
-<div class="loading-wrapper">
+<div class="loading-wrapper" [class.finished]="finishedAnimation">
   <div class="logo-container">
-    <!-- Contador: solo mientras showName sea false -->
+    <!-- Contador -->
     <span 
       class="loading-percent" 
       *ngIf="!showName"
-      [style.transform]="'scale(' + (0.5 + progress/200) + ')'"
-    >
+      [style.fontSize.px]="40 + progress * 2"
+      [style.transform]="'scale(' + (1 + progress/50) + ')'">
       {{ progress }}%
     </span>
 
-    <!-- Barra de progreso -->
-    <div class="progress-bar" *ngIf="!showName">
-      <div class="progress-fill" [style.width.%]="progress"></div>
-      <div class="progress-circle" [style.left.%]="progress"></div>
+    <!-- Partículas -->
+    <div *ngFor="let p of particles" 
+         class="particle" 
+         [style.left.%]="p.x"
+         [style.top.px]="p.y"
+         [style.width.px]="p.size"
+         [style.height.px]="p.size"
+         [style.opacity]="p.opacity"
+         [style.--dx]="p.dx + 'px'"
+         [style.--dy]="p.dy + 'px'"
+         [class.explode]="finishedAnimation">
     </div>
 
     <!-- Nombre -->
-    <span class="loading-text" *ngIf="showName">
+    <span class="loading-text" 
+      *ngIf="showName"
+      [class.explode]="finishedAnimation">
       Yazmín González
     </span>
   </div>

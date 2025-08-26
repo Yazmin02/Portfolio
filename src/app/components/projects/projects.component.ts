@@ -35,6 +35,12 @@ export class ProjectsComponent {
       title: 'Desarrollo backend',
       description: 'Implementación de APIs RESTful para soporte de aplicaciones frontend y móviles.',
       technologies: 'Spring Boot, PHP'
-    }
+    },
+    {
+      title: 'Desarrollo backend',
+      description: 'Implementación de APIs RESTful para soporte de aplicaciones frontend y móviles.',
+      technologies: 'Spring Boot, PHP'
+    },
+    
   ];
 }

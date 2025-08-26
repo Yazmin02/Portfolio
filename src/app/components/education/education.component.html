@@ -3,8 +3,9 @@
   <div class="edu-grid">
     <div *ngFor="let edu of educationList" class="edu-card">
       <div class="edu-icon">
-        🎓
+        <img [src]="edu.icon" alt="{{ edu.institution }}" class="edu-icon-img">
       </div>
+      
       <div class="edu-info">
         <h3>{{ edu.degree }}</h3>
         <p class="institution">{{ edu.institution }}</p>
