@@ -1,15 +1,16 @@
-<section class="education">
+<div class="education">
+  <h2 class="component-title">Educación</h2>
+  
   <div class="edu-grid">
-    <div *ngFor="let edu of educationList" class="edu-card">
+    <div class="edu-card" *ngFor="let edu of educationList">
       <div class="edu-icon">
-        <img [src]="edu.icon" alt="{{ edu.institution }}" class="edu-icon-img">
+        <img [src]="edu.icon" [alt]="edu.institution">
       </div>
-      
-      <div class="edu-info">
+      <div class="edu-content">
         <h3>{{ edu.degree }}</h3>
-        <p class="institution">{{ edu.institution }}</p>
-        <p class="period">{{ edu.period }}</p>
+        <div class="institution">{{ edu.institution }}</div>
+        <div class="period">{{ edu.period }}</div>
       </div>
     </div>
   </div>
-</section>
+</div>

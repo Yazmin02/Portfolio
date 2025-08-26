@@ -45,13 +45,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    // Inicializar directamente sin requestAnimationFrame para evitar problemas
     this.initializeApp();
   }
 
   private initializeApp(): void {
+    console.log('App: Initializing application...');
+    
     const main = document.querySelector('main') as HTMLElement;
+    console.log('App: Main element found:', !!main);
 
     // Ajustamos altura del body para permitir scroll vertical que mueva horizontal
     if (main) {
@@ -61,13 +62,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       
       // Restamos la altura de la ventana para que no haya espacio extra al final
       document.body.style.height = `${totalWidth - window.innerHeight}px`;
+      console.log('App: Body height set to:', document.body.style.height);
     }
 
-    // IntersectionObserver para fade-in
+    // IntersectionObserver solo para animaciones fade-in
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.target.classList.contains('fade-in')) {
           entry.target.classList.add('visible');
+          console.log('App: Section became visible:', entry.target.id);
         }
       });
     }, { 
@@ -75,15 +78,21 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       rootMargin: '0px'
     });
     
-    // Observar las secciones después de un pequeño delay para asegurar que estén renderizadas
+    // Observar solo las secciones con fade-in para animaciones
     setTimeout(() => {
       if (this.observer) {
-        document.querySelectorAll('.fade-in').forEach(el => this.observer!.observe(el));
+        const fadeElements = document.querySelectorAll('.fade-in');
+        console.log('App: Found fade-in elements:', fadeElements.length);
+        fadeElements.forEach(el => {
+          this.observer!.observe(el);
+          console.log('App: Observing element:', el.id);
+        });
       }
     }, 100);
   }
 
   onLoadingFinished() { 
+    console.log('Loading finished - transitioning to main app');
     this.isLoading = false; 
     this.cdr.detectChanges();
   }
@@ -95,10 +104,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   scrollToSection(id: string) {
     if (!isPlatformBrowser(this.platformId)) return;
+    console.log('App: Scrolling to section:', id);
     const section = document.getElementById(id);
     if (section) {
       const offsetLeft = section.offsetLeft;
+      console.log('App: Section offsetLeft:', offsetLeft);
       window.scrollTo({ top: offsetLeft, behavior: 'smooth' });
+    } else {
+      console.log('App: Section not found:', id);
     }
     this.activeSection = id;
     this.menuOpen = false;
@@ -133,12 +146,18 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const main = document.querySelector('main') as HTMLElement;
     if (main) main.style.transform = `translateX(-${window.scrollY}px)`;
 
+    // Detectar sección activa basada en la posición del scroll
     const scrollPos = window.scrollY + window.innerHeight / 2;
+    console.log('App: Scroll position:', window.scrollY, 'Scroll pos:', scrollPos);
     for (let section of this.sections) {
       const el = document.getElementById(section.id);
       if (el && el.offsetLeft <= scrollPos && (el.offsetLeft + el.offsetWidth) > scrollPos) {
-        this.activeSection = section.id;
-        this.cdr.detectChanges();
+        if (this.activeSection !== section.id) {
+          console.log('App: Active section changed from', this.activeSection, 'to', section.id);
+          this.activeSection = section.id;
+          this.cdr.detectChanges();
+        }
+        break;
       }
     }
   }

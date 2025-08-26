@@ -52,9 +52,12 @@ export class LoadingComponent implements OnInit, OnDestroy {
   triggerFinish() {
     this.finishedAnimation = true;
     this.cdr.detectChanges();
+    
+    // Usar un timeout más corto para evitar problemas de hidratación
     this.timeoutIds.push(setTimeout(() => {
+      console.log('Loading: Emitting finished event'); // Debug
       this.finished.emit();
-    }, 1000));
+    }, 500)); // Reducido de 1000ms a 500ms
   }
 
   ngOnDestroy() {

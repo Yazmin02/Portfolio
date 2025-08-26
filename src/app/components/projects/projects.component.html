@@ -1,12 +1,10 @@
-<section class="projects">
-
+<div class="projects">
+  <h2 class="component-title">Proyectos</h2>
+  
   <div class="projects-grid">
-    <a *ngFor="let proj of projects; let i = index"
-       #projCard
-       [href]="proj.github"
-       target="_blank"
-       rel="noopener"
-       class="proj-card">
+    <div *ngFor="let proj of projects; let i = index"
+         #projCard
+         class="proj-card">
       <div class="card-inner">
         <div class="card-front">
           <h3>{{ proj.title }}</h3>
@@ -14,9 +12,9 @@
         </div>
         <div class="card-back">
           <p>{{ proj.description }}</p>
-          <img src="assets/icons/github.png" alt="GitHub" class="github-icon" />
+          <img src="assets/icons/git.png" alt="GitHub" class="github-icon" (click)="openGitHub(proj.github)" />
         </div>
       </div>
-    </a>
+    </div>
   </div>
-</section>
+</div>

@@ -1,14 +1,14 @@
-<section class="hero">
+<section class="hero" id="about">
   <ng-particles [id]="'tsparticles'" [options]="particlesOptions"></ng-particles>
   <div class="overlay"></div>
 
+  <h2 class="component-title">Bienvenido</h2>
 
-  <div class="cards-container" [class.two-columns]="showRightCards">
-    <div class="left-card card name-card" #leftCard [class.shift-left]="showRightCards">
+  <div class="cards-container two-columns">
+    <div class="left-card card name-card">
       <h1>{{ name }}</h1>
     </div>
-  
-    <div class="right-cards" #rightCards [class.visible]="showRightCards">
+    <div class="right-cards">
       <div class="card title-card">
         <h2 #typedElement></h2>
       </div>
@@ -17,9 +17,7 @@
       </div>
     </div>
   </div>
-  
 
-  <!-- Scroll indicator -->
   <div class="scroll-down">
     <span></span>
   </div>

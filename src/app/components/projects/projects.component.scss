@@ -2,83 +2,193 @@
   width: 100%;
   height: 100vh;
   padding: 2rem;
-  text-align: center;
-  background: #f8f9fa;
+  background: #f5f5f5;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  /* Removemos overflow-y: auto para no bloquear animaciones */
 
+  .component-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a237e;
+    text-align: center;
+    margin: 1.5rem;
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
 
+  .component-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b3cde0, #848eff);
+    margin: 0.8rem auto 0;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .component-title:hover::after {
+    width: 120px;
+  }
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    justify-items: center;
     max-width: 1200px;
     width: 100%;
   }
 
-  a.proj-card {
+  .proj-card {
     text-decoration: none;
     color: inherit;
     perspective: 1000px;
+    height: 200px;
+  }
+
+  .card-inner {
+    position: relative;
     width: 100%;
-    max-width: 350px;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  .proj-card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+
+  .card-front {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 2px solid #e0e0e0;
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 1rem 0;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+
+  }
+
+  .card-back {
+    background: linear-gradient(145deg, #b3cde0, #91b9dc);
+    transform: rotateY(180deg);
+    color: white;
+    text-align: center;
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin: 0 0 1rem 0;
+    }
+
+    .github-icon {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      filter: brightness(0) invert(1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.2);
+        filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+      }
+    }
+  }
+
+  // Estilos para los botones de acción en las tarjetas
+  .card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      &.github-btn {
+        background: linear-gradient(135deg, #24292e 0%, #586069 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(36, 41, 46, 0.3);
+
+        img {
+          width: 16px;
+          height: 16px;
+          filter: brightness(0) invert(1);
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(36, 41, 46, 0.4);
+        }
+      }
+    }
+  }
+
+  // Animaciones para las tarjetas
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .proj-card {
+    animation: fadeInUp 0.6s ease forwards;
     opacity: 0;
-    transform: translateX(-50px);
-    transition: transform 0.6s ease, opacity 0.6s ease;
 
     &.visible {
       opacity: 1;
-      transform: translateX(0);
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      padding: 2rem;
-      border-radius: 12px;
-      background-color: #fff;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
-      height: 200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-      }
-
-      h3 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-        color: #333;
-        font-weight: 600;
-      }
-
-      p {
-        margin-bottom: 1rem;
-        color: #555;
-        line-height: 1.6;
-        flex-grow: 1;
-      }
-
-      .github-icon {
-        width: 28px;
-        height: 28px;
-        margin-top: 0.5rem;
-        align-self: flex-end;
-      }
-    }
-
-    .card-back {
-      display: none;
     }
   }
 
@@ -86,89 +196,144 @@
   @media (max-width: 1024px) {
     padding: 1.5rem;
 
+    .component-title {
+      font-size: 2.2rem;
+      top: 1.5rem;
+    }
+
     .projects-grid {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
 
-    a.proj-card {
-      max-width: 320px;
+    .proj-card {
+      height: 320px;
 
-      .card-inner {
-        padding: 1.8rem;
-        height: 180px;
-
-        h3 {
+      .card-front {
+        .card-header h3 {
           font-size: 1.3rem;
+        }
+
+        .github-preview {
+          margin: 0.4rem 0;
         }
       }
     }
-  }
 
-  // Responsive para tablets
-  @media (max-width: 768px) {
-    padding: 1rem;
+    .card-actions {
+      gap: 0.4rem;
 
-    .projects-grid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
-    }
-
-    a.proj-card {
-      max-width: 300px;
-
-      .card-inner {
-        padding: 1.5rem;
-        height: 170px;
-
-        h3 {
-          font-size: 1.2rem;
-          margin-bottom: 0.8rem;
-        }
-
-        p {
-          font-size: 0.95rem;
-          margin-bottom: 0.8rem;
-        }
-
-        .github-icon {
-          width: 24px;
-          height: 24px;
-        }
+      button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
       }
     }
   }
 
   // Responsive para móviles
-  @media (max-width: 480px) {
-    padding: 0.8rem;
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .component-title {
+      font-size: 2rem;
+      top: 1rem;
+      padding: 0 1rem;
+    }
 
     .projects-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
 
-    a.proj-card {
-      max-width: 100%;
+    .proj-card {
+      height: 300px;
 
-      .card-inner {
+      .card-front {
         padding: 1.2rem;
-        height: 160px;
 
-        h3 {
-          font-size: 1.1rem;
-          margin-bottom: 0.6rem;
+        .card-header {
+          margin-bottom: 0.8rem;
+
+          h3 {
+            font-size: 1.2rem;
+          }
+
+          .technologies {
+            font-size: 0.8rem;
+          }
         }
+
+        .github-preview {
+          margin: 0.3rem 0;
+        }
+      }
+
+      .card-back {
+        padding: 1.2rem;
 
         p {
           font-size: 0.9rem;
+        }
+      }
+    }
+
+    .card-actions {
+      gap: 0.4rem;
+
+      button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  // Responsive para móviles pequeños
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+
+    .component-title {
+      font-size: 1.8rem;
+      top: 0.8rem;
+      padding: 0 0.8rem;
+    }
+
+    .proj-card {
+      height: 280px;
+
+      .card-front {
+        padding: 1rem;
+
+        .card-header {
           margin-bottom: 0.6rem;
+
+          h3 {
+            font-size: 1.1rem;
+          }
+
+          .technologies {
+            font-size: 0.75rem;
+          }
         }
 
-        .github-icon {
-          width: 22px;
-          height: 22px;
+        .github-preview {
+          margin: 0.2rem 0;
         }
+      }
+
+      .card-back {
+        padding: 1rem;
+
+        p {
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    .card-actions {
+      gap: 0.3rem;
+
+      button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
       }
     }
   }

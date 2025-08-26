@@ -1,18 +1,17 @@
 <div class="skills">
-  <div class="scroll-container">
-    
-    <div class="skill-category" *ngFor="let category of skillCategories">
-      <h3 class="category-title">{{ category.category }}</h3>
-      <div class="skills-grid">
-        <div class="skill-card" *ngFor="let skill of category.skills">
-          <div class="card-inner">
-            <div class="card-front">
-              <img [src]="skill.icon" [alt]="skill.name" class="skill-icon">
-              <div class="skill-name">{{ skill.name }}</div>
-            </div>
-            <div class="card-back">
-              <div class="skill-description">{{ skill.description }}</div>
-            </div>
+  <h2 class="component-title">Habilidades Técnicas</h2>
+  
+  <div class="skill-category" *ngFor="let category of skillCategories">
+    <h3 class="category-title">{{ category.category }}</h3>
+    <div class="skills-grid">
+      <div class="skill-card" *ngFor="let skill of category.skills">
+        <div class="card-inner">
+          <div class="card-front">
+            <img [src]="skill.icon" [alt]="skill.name" class="skill-icon">
+            <div class="skill-name">{{ skill.name }}</div>
+          </div>
+          <div class="card-back">
+            <div class="skill-description">{{ skill.description }}</div>
           </div>
         </div>
       </div>

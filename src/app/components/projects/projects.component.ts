@@ -47,4 +47,9 @@ export class ProjectsComponent implements AfterViewInit {
       }, index * 200); // delay escalonado
     });
   }
+
+  openGitHub(githubUrl: string) {
+    console.log('Abriendo GitHub:', githubUrl);
+    window.open(githubUrl, '_blank', 'noopener,noreferrer');
+  }
 }

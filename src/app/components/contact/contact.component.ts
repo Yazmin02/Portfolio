@@ -15,6 +15,7 @@ export class ContactComponent {
   email = 'yazmingonzalezmeneses@outlook.com';
   phone = '5565439086';
   github = 'https://github.com/Yazmin02';
+  linkedin = 'https://www.linkedin.com/in/yazmin-gm';
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({

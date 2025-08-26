@@ -51,12 +51,12 @@ footer {
 /* Animación fade-in */
 .fade-in {
   opacity: 0;
-  transform: translateX(-50px);
+  transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 .fade-in.visible { 
   opacity: 1; 
-  transform: translateX(0); 
+  transform: translateY(0); 
 }
 
 /* Botón menú flotante responsivo */
@@ -226,8 +226,6 @@ footer {
     width: 70px;
   }
 }
-
-
 
 /* Indicadores de navegación responsivos */
 .nav-indicators {
@@ -450,8 +448,8 @@ section app-contact {
   .nav-indicators {
     bottom: 45px;
     gap: 4px;
-  }
-
+    }
+  
   .nav-dot {
     width: 6px;
     height: 6px;

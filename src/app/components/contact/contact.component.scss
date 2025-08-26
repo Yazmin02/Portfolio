@@ -10,7 +10,40 @@
   align-items: center;
   position: relative;
 
+  .component-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a237e;
+    text-align: center;
+    margin: 1.5rem;
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
 
+  .component-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #b3cde0, #848eff);
+    margin: 0.8rem auto 0;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .component-title:hover::after {
+    width: 120px;
+  }
 
   .contact-legend {
     font-size: 1.1rem;
@@ -127,6 +160,11 @@
   @media (max-width: 1024px) {
     padding: 1.5rem;
 
+    .component-title {
+      font-size: 2.2rem;
+      top: 1.5rem;
+    }
+
     .contact-wrapper {
       gap: 2rem;
     }
@@ -160,9 +198,15 @@
     }
   }
 
-  // Responsive para tablets
+  // Responsive para móviles
   @media (max-width: 768px) {
     padding: 1rem;
+
+    .component-title {
+      font-size: 2rem;
+      top: 1rem;
+      padding: 0 1rem;
+    }
 
     .contact-legend {
       font-size: 1rem;
@@ -212,9 +256,15 @@
     }
   }
 
-  // Responsive para móviles
+  // Responsive para móviles pequeños
   @media (max-width: 480px) {
     padding: 0.8rem;
+
+    .component-title {
+      font-size: 1.8rem;
+      top: 0.8rem;
+      padding: 0 0.8rem;
+    }
 
     .contact-legend {
       font-size: 0.9rem;

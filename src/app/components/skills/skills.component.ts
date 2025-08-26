@@ -22,7 +22,7 @@ interface SkillCategory {
 export class SkillsComponent {
   skillCategories: SkillCategory[] = [
     {
-      category: 'Tech Skills',
+      category: '',
       skills: [
         { name: 'Python', icon: 'assets/icons/python.png', description: 'Análisis de datos e Inteligencia Artificial' },
         { name: 'Java', icon: 'assets/icons/java.png', description: 'Desarrollo de software' },
