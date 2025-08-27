@@ -1,59 +1,102 @@
-# Portafolio
+# Portfolio Personal - Angular + Vercel
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.4.
+Portfolio personal desarrollado con Angular 19, desplegado en Vercel con funcionalidad de formulario de contacto usando Resend.
 
-## Development server
+## 🚀 Características
 
-To start a local development server, run:
+- **Angular 19** con SSR (Server-Side Rendering)
+- **Diseño Responsivo** y moderno
+- **Formulario de Contacto** funcional con Resend
+- **Despliegue Automático** en Vercel
+- **Optimización SEO** con prerendering
 
-```bash
-ng serve
+## 📧 Configuración del Formulario de Contacto
+
+### 1. Crear cuenta en Resend
+
+1. Ve a [resend.com](https://resend.com) y crea una cuenta
+2. Verifica tu dominio de email o usa el dominio de prueba `onboarding@resend.dev`
+
+### 2. Obtener API Key
+
+1. En el dashboard de Resend, ve a "API Keys"
+2. Crea una nueva API key
+3. Copia la key generada
+
+### 3. Configurar Variables de Entorno
+
+#### Para Desarrollo Local:
+Crea un archivo `.env.local` en la raíz del proyecto:
+```env
+RESEND_API_KEY=tu_api_key_de_resend
+CONTACT_EMAIL=tu-email@ejemplo.com
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+#### Para Vercel:
+1. Ve a tu proyecto en Vercel Dashboard
+2. Ve a "Settings" > "Environment Variables"
+3. Agrega las siguientes variables:
+   - `RESEND_API_KEY`: Tu API key de Resend
+   - `CONTACT_EMAIL`: Tu email donde recibirás los mensajes
 
-## Code scaffolding
+### 4. Personalizar Email
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Edita el archivo `api/contact/index.ts` para personalizar:
+- El email de origen (`from`)
+- El asunto del email
+- El template HTML del mensaje
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## 🛠️ Instalación y Desarrollo
 
 ```bash
-ng build
+# Instalar dependencias
+npm install
+
+# Servir en desarrollo
+npm start
+
+# Build para producción
+npm run build
+
+# Build para Vercel
+npm run vercel-build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 📦 Despliegue
 
-## Running unit tests
+El proyecto está configurado para desplegar automáticamente en Vercel:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. Conecta tu repositorio a Vercel
+2. Configura las variables de entorno
+3. ¡Listo! Se desplegará automáticamente
 
-```bash
-ng test
+## 🎨 Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── contact/          # Formulario de contacto
+│   │   ├── hero/            # Sección principal
+│   │   ├── about/           # Sobre mí
+│   │   ├── skills/          # Habilidades
+│   │   ├── projects/        # Proyectos
+│   │   └── experience/      # Experiencia
+│   └── pages/
+├── assets/
+│   └── icons/              # Iconos PNG
+api/
+└── contact/
+    └── index.ts            # API del formulario
 ```
 
-## Running end-to-end tests
+## 🔧 Tecnologías Utilizadas
 
-For end-to-end (e2e) testing, run:
+- **Frontend**: Angular 19, TypeScript, SCSS
+- **Backend**: Node.js, Express, Resend
+- **Despliegue**: Vercel
+- **Email**: Resend API
 
-```bash
-ng e2e
-```
+## 📝 Licencia
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este proyecto es de uso personal y educativo.

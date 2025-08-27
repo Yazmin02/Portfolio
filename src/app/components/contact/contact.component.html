@@ -3,6 +3,11 @@
   
   <p class="contact-legend">¿Tienes alguna consulta o proyecto? ¡Envíame un mensaje y te responderé lo antes posible!</p>
 
+  <!-- Mensaje de estado -->
+  <div *ngIf="submitMessage" class="message" [class.success]="submitSuccess" [class.error]="!submitSuccess">
+    {{ submitMessage }}
+  </div>
+
   <div class="contact-wrapper">
     <!-- Formulario -->
     <form [formGroup]="contactForm" (ngSubmit)="sendEmail()" class="contact-form">
@@ -10,7 +15,10 @@
       <input formControlName="email" type="email" placeholder="Correo electrónico" required>
       <input formControlName="subject" type="text" placeholder="Asunto" required>
       <textarea formControlName="message" rows="5" placeholder="Mensaje" required></textarea>
-      <button type="submit" [disabled]="contactForm.invalid">Enviar</button>
+      <button type="submit" [disabled]="contactForm.invalid || isSubmitting">
+        <span *ngIf="!isSubmitting">Enviar</span>
+        <span *ngIf="isSubmitting">Enviando...</span>
+      </button>
     </form>
 
     <!-- Información adicional con iconos PNG -->
