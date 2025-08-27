@@ -9,7 +9,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration=production",
-    "vercel-build": "ng build --configuration production && ng run portafolio:server:production || echo 'SSR skipped'"
+    "vercel-build": "ng build --configuration production && ng run portafolio:server:production"
   },
   "private": true,
   "dependencies": {
