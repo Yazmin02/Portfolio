@@ -1,15 +1,51 @@
 {
   "version": 2,
-  "buildCommand": "npm run build:prod",
+  "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist/portafolio/browser",
   "routes": [
     {
-      "src": "/",
-      "dest": "/index.csr.html"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*\\.js)",
+      "headers": {
+        "content-type": "application/javascript"
+      }
+    },
+    {
+      "src": "/(.*\\.css)",
+      "headers": {
+        "content-type": "text/css"
+      }
+    },
+    {
+      "src": "/about",
+      "dest": "/about/index.html"
+    },
+    {
+      "src": "/education",
+      "dest": "/education/index.html"
+    },
+    {
+      "src": "/experience",
+      "dest": "/experience/index.html"
+    },
+    {
+      "src": "/skills",
+      "dest": "/skills/index.html"
+    },
+    {
+      "src": "/projects",
+      "dest": "/projects/index.html"
+    },
+    {
+      "src": "/contact",
+      "dest": "/contact/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.csr.html"
+      "dest": "/index.html"
     }
   ]
 }

@@ -9,9 +9,16 @@ import { isDevMode } from '@angular/core';
 const DIST_FOLDER = join(process.cwd(), 'dist/portafolio/browser');
 const app = express();
 
-// Servir archivos estáticos
-app.get('*.*', express.static(DIST_FOLDER, {
-  maxAge: '1y'
+// Servir archivos estáticos con MIME types correctos
+app.use(express.static(DIST_FOLDER, {
+  maxAge: '1y',
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    } else if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
 }));
 
 // SSR para todas las rutas
@@ -29,21 +36,12 @@ app.get('*', async (req, res) => {
   }
 });
 
-// Solo levantar puerto en producción
-if (!isDevMode()) {
-  const PORT = Number(process.env['PORT'] || 4001);
-  const listenServer = (port: number) => {
-    app.listen(port, () => console.log(`Server listo en http://localhost:${port}`))
-       .on('error', (err: any) => {
-         if (err.code === 'EADDRINUSE') {
-           console.warn(`Puerto ${port} ocupado. Intentando en ${port + 1}...`);
-           listenServer(port + 1);
-         } else {
-           throw err;
-         }
-       });
-  };
-  listenServer(PORT);
-} else {
-  console.log('Modo desarrollo: SSR servirá desde Vite HMR, sin abrir puerto manual.');
+// Solo levantar puerto en desarrollo local
+if (isDevMode()) {
+  const PORT = Number(process.env['PORT'] || 4000);
+  app.listen(PORT, () => {
+    console.log(`✅ Server listo en http://localhost:${PORT}`);
+  });
 }
+
+export default app;
