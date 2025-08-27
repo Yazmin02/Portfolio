@@ -8,20 +8,20 @@
   <!-- Menú flotante desplegable -->
   <div class="floating-menu" [class.open]="menuOpen">
     <a *ngFor="let section of sections"
-       (click)="navigateToSection(section.id); onMenuClick()"
-       [class.active]="activeSection === section.id">
+       [routerLink]="['/' + section.id]"
+       routerLinkActive="active"
+       (click)="onMenuClick()">
       {{ section.label }}
     </a>
   </div>
 
-  <!-- Contenedor principal -->
+  <!-- Contenedor principal con scroll horizontal -->
   <main class="main-container">
-    <app-hero *ngIf="activeSection === 'about'"></app-hero>
-    <app-education *ngIf="activeSection === 'education'"></app-education>
-    <app-experience *ngIf="activeSection === 'experience'"></app-experience>
-    <app-skills *ngIf="activeSection === 'skills'"></app-skills>
-    <app-projects *ngIf="activeSection === 'projects'"></app-projects>
-    <app-contact *ngIf="activeSection === 'contact'"></app-contact>
+    <div class="sections-wrapper">
+      <div class="section-container" *ngFor="let section of sections; let i = index">
+        <router-outlet *ngIf="activeSection === section.id"></router-outlet>
+      </div>
+    </div>
   </main>
 
   <!-- Indicadores de navegación -->

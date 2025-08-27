@@ -7,8 +7,10 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: #f5f5f5;
+  scroll-behavior: smooth;
 }
 
 .app-container {
@@ -95,6 +97,19 @@ body {
   width: 100%;
   min-height: 100vh;
   position: relative;
+}
+
+/* Contenedor de secciones para scroll horizontal */
+.sections-wrapper {
+  display: flex;
+  width: 600vw; /* 6 secciones * 100vw */
+  min-height: 100vh;
+}
+
+.section-container {
+  width: 100vw;
+  min-height: 100vh;
+  flex-shrink: 0;
 }
 
 /* Indicadores de navegación */
