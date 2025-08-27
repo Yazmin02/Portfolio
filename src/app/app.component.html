@@ -1,40 +1,23 @@
 <!-- Preloader -->
 <app-loading *ngIf="isLoading" (finished)="onLoadingFinished()"></app-loading>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading" class="app-container">
   <!-- Botón menú flotante -->
   <button class="menu-btn" (click)="toggleMenu()">☰</button>
 
   <!-- Menú flotante desplegable -->
   <div class="floating-menu" [class.open]="menuOpen">
     <a *ngFor="let section of sections" 
-       (click)="scrollToSection(section.id)"
-       [class.active]="activeSection === section.id">
+       [routerLink]="['/' + section.id]"
+       routerLinkActive="active"
+       (click)="onMenuClick()">
       {{ section.label }}
     </a>
   </div>
 
-  <!-- Contenedor horizontal con scroll vertical -->
-  <main>
-    <section id="about">
-      <app-hero></app-hero>
-    </section>
-
-    <section id="education" class="fade-in">
-      <app-education></app-education>
-    </section>
-
-    <section id="skills" class="fade-in">
-      <app-skills></app-skills>
-    </section>
-
-    <section id="projects" class="fade-in">
-      <app-projects></app-projects>
-    </section>
-
-    <section id="contact" class="fade-in">
-      <app-contact></app-contact>
-    </section>
+  <!-- Contenedor principal -->
+  <main class="main-container">
+    <router-outlet></router-outlet>
   </main>
 
   <!-- Indicadores de navegación -->
@@ -42,7 +25,7 @@
     <div *ngFor="let section of sections; let i = index" 
          class="nav-dot" 
          [class.active]="activeSection === section.id"
-         (click)="scrollToSection(section.id)"
+         (click)="navigateToSection(section.id)"
          [title]="section.label">
     </div>
   </div>

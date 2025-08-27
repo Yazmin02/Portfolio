@@ -1,0 +1,56 @@
+<div class="experience">
+  <h2 class="component-title">Experiencia Profesional</h2>
+  
+  <div class="experience-container">
+    <div class="experience-item" *ngFor="let exp of experiences; let i = index">
+      <div class="experience-header">
+        <div class="experience-number">{{ i + 1 }}</div>
+        <div class="experience-content">
+          <h3>{{ exp.role }}</h3>
+          <div class="experience-meta">
+            <span class="company">
+              <img [src]="exp.icon" [alt]="exp.company + ' logo'" class="company-icon">
+              {{ exp.company }}
+            </span>
+            <span class="year">
+              <img src="assets/icons/calendario.png" alt="calendar" class="meta-icon">
+              {{ exp.year }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="experience-summary">
+        <p>{{ exp.summary }}</p>
+        <button class="read-more-btn" (click)="openModal(exp)" title="Leer más detalles">
+          <img src="assets/icons/mas.png" alt="read more" class="btn-icon">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para detalles completos -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ selectedExperience?.role }}</h3>
+        <button class="close-btn" (click)="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="company">
+            <img [src]="selectedExperience?.icon" [alt]="selectedExperience?.company + ' logo'" class="company-icon">
+            {{ selectedExperience?.company }}
+          </span>
+          <span class="year">
+            <img src="assets/icons/calendario.png" alt="calendar" class="meta-icon">
+            {{ selectedExperience?.year }}
+          </span>
+        </div>
+        <div class="modal-description">
+          <p>{{ selectedExperience?.fullDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
