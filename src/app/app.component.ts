@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, HostListener, Inject, PLATFORM_ID, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+
 import { HeroComponent } from './components/hero/hero.component';
 import { EducationComponent } from './components/education/education.component';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -17,7 +16,6 @@ interface Section { id: string; label: string; }
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     HeroComponent,
     EducationComponent,
     SkillsComponent,
@@ -45,23 +43,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef,
-    private router: Router
-  ) {
-    // Suscribirse a cambios de ruta para actualizar la sección activa
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      const url = event.urlAfterRedirects;
-      const section = url.substring(1); // Remover el slash inicial
-      if (section && this.sections.find(s => s.id === section)) {
-        this.activeSection = section;
-      } else {
-        this.activeSection = 'about';
-      }
-      this.cdr.detectChanges();
-    });
-  }
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -69,12 +52,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   private initializeApp(): void {
-    console.log('App: Initializing application with route-based navigation');
+    console.log('App: Initializing application with section-based navigation');
   }
 
-  onLoadingFinished() { 
+  onLoadingFinished() {
     console.log('Loading finished - transitioning to main app');
-    this.isLoading = false; 
+    this.isLoading = false;
     this.cdr.detectChanges();
   }
 
@@ -87,15 +70,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   navigateToSection(sectionId: string) {
-    this.router.navigate(['/' + sectionId]);
+    this.activeSection = sectionId;
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     if (this.menuOpen) return; // No navegar si el menú está abierto
-    
+
     const currentIndex = this.sections.findIndex(s => s.id === this.activeSection);
-    
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();

@@ -27,22 +27,22 @@
     width: 100%;
     padding: 0 2rem;
     box-sizing: border-box;
-  }
 
-  .component-title::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #b3cde0, #848eff);
-    margin: 0.8rem auto 0;
-    border-radius: 2px;
-    transition: width 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+    &::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #b3cde0, #848eff);
+      margin: 0.8rem auto 0;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-  .component-title:hover::after {
-    width: 120px;
+    &:hover::after {
+      width: 120px;
+    }
   }
 
   .experience-container {
@@ -56,6 +56,25 @@
     max-height: calc(100vh - 8rem);
     overflow-y: auto;
     overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(179, 205, 224, 0.1);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #b3cde0;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #a3bdd0;
+      }
+    }
   }
 
   .experience-item {
@@ -67,6 +86,11 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+
+    &:nth-child(1) { animation-delay: 0.1s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
 
     &::before {
       content: '';
@@ -124,17 +148,20 @@
         align-items: center;
         flex-wrap: wrap;
 
-        .company {
-          background: #b3cde0;
-          color: #222;
+        .company, .year {
           padding: 0.4rem 1rem;
           border-radius: 25px;
           font-size: 0.9rem;
           font-weight: 600;
-          box-shadow: 0 4px 12px rgba(179, 205, 224, 0.3);
           display: flex;
           align-items: center;
           gap: 0.5rem;
+        }
+
+        .company {
+          background: #b3cde0;
+          color: #222;
+          box-shadow: 0 4px 12px rgba(179, 205, 224, 0.3);
 
           .company-icon {
             width: 20px;
@@ -147,14 +174,7 @@
         .year {
           background: #848eff;
           color: white;
-          padding: 0.4rem 1rem;
-          border-radius: 25px;
-          font-size: 0.9rem;
-          font-weight: 600;
           box-shadow: 0 4px 12px rgba(132, 142, 255, 0.3);
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
 
           .meta-icon {
             width: 16px;
@@ -213,27 +233,6 @@
     }
   }
 
-  // Estilos para el scrollbar
-  .experience-container::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .experience-container::-webkit-scrollbar-track {
-    background: rgba(179, 205, 224, 0.1);
-    border-radius: 4px;
-  }
-
-  .experience-container::-webkit-scrollbar-thumb {
-    background: #b3cde0;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-
-  .experience-container::-webkit-scrollbar-thumb:hover {
-    background: #a3bdd0;
-  }
-
-  // Modal styles
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -257,17 +256,6 @@
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: modalSlideIn 0.3s ease-out;
-  }
-
-  @keyframes modalSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-50px) scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
   }
 
   .modal-header {
@@ -310,17 +298,20 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
 
-      .company {
-        background: #b3cde0;
-        color: #222;
+      .company, .year {
         padding: 0.5rem 1rem;
         border-radius: 25px;
         font-size: 0.9rem;
         font-weight: 600;
-        box-shadow: 0 4px 12px rgba(179, 205, 224, 0.3);
         display: flex;
         align-items: center;
         gap: 0.5rem;
+      }
+
+      .company {
+        background: #b3cde0;
+        color: #222;
+        box-shadow: 0 4px 12px rgba(179, 205, 224, 0.3);
 
         .company-icon {
           width: 24px;
@@ -333,14 +324,7 @@
       .year {
         background: #848eff;
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-        font-size: 0.9rem;
-        font-weight: 600;
         box-shadow: 0 4px 12px rgba(132, 142, 255, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
 
         .meta-icon {
           width: 18px;
@@ -351,18 +335,15 @@
       }
     }
 
-    .modal-description {
-      p {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #555;
-        margin: 0;
-        white-space: pre-line;
-      }
+    .modal-description p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #555;
+      margin: 0;
+      white-space: pre-line;
     }
   }
 
-  // Animaciones
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -374,51 +355,18 @@
     }
   }
 
-  .experience-item {
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
-
-    &:nth-child(1) { animation-delay: 0.1s; }
-    &:nth-child(2) { animation-delay: 0.2s; }
-    &:nth-child(3) { animation-delay: 0.3s; }
-  }
-
-  // Responsive para tablets
-  @media (max-width: 1024px) {
-    padding: 1.5rem;
-
-    .component-title {
-      font-size: 2.2rem;
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
     }
-
-    .experience-container {
-      max-width: 800px;
-      margin-top: 5rem;
-      max-height: calc(100vh - 7rem);
-    }
-
-    .experience-item {
-      padding: 1.5rem;
-
-      .experience-header {
-        .experience-number {
-          width: 35px;
-          height: 35px;
-          font-size: 1.1rem;
-        }
-
-        .experience-content h3 {
-          font-size: 1.3rem;
-        }
-      }
-    }
-
-    .modal-content {
-      max-width: 500px;
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 
-  // Responsive para móviles
+  // Responsive simplificado
   @media (max-width: 768px) {
     padding: 1rem;
 
@@ -446,50 +394,18 @@
           font-size: 1rem;
         }
 
-        .experience-content {
-          h3 {
-            font-size: 1.2rem;
-          }
-
-          .experience-meta {
-            gap: 0.5rem;
-
-            .company {
-              font-size: 0.8rem;
-              padding: 0.3rem 0.8rem;
-
-              .company-icon {
-                width: 18px;
-                height: 18px;
-              }
-            }
-
-            .year {
-              font-size: 0.8rem;
-              padding: 0.3rem 0.8rem;
-
-              .meta-icon {
-                width: 14px;
-                height: 14px;
-              }
-            }
-          }
+        .experience-content h3 {
+          font-size: 1.2rem;
         }
       }
 
-      .experience-summary {
-        p {
-          font-size: 0.95rem;
-        }
+      .experience-summary .read-more-btn {
+        width: 40px;
+        height: 40px;
 
-        .read-more-btn {
-          width: 40px;
-          height: 40px;
-
-          .btn-icon {
-            width: 20px;
-            height: 20px;
-          }
+        .btn-icon {
+          width: 20px;
+          height: 20px;
         }
       }
     }
@@ -497,140 +413,6 @@
     .modal-content {
       width: 95%;
       max-height: 85vh;
-    }
-
-    .modal-header {
-      padding: 1.5rem 1.5rem 1rem;
-
-      h3 {
-        font-size: 1.3rem;
-      }
-    }
-
-    .modal-body {
-      padding: 1rem 1.5rem 1.5rem;
-
-      .modal-meta {
-        gap: 0.5rem;
-
-        .company {
-          font-size: 0.8rem;
-          padding: 0.4rem 0.8rem;
-
-          .company-icon {
-            width: 20px;
-            height: 20px;
-          }
-        }
-
-        .year {
-          font-size: 0.8rem;
-          padding: 0.4rem 0.8rem;
-
-          .meta-icon {
-            width: 16px;
-            height: 16px;
-          }
-        }
-      }
-
-      .modal-description p {
-        font-size: 0.95rem;
-      }
-    }
-  }
-
-  // Responsive para móviles pequeños
-  @media (max-width: 480px) {
-    padding: 0.8rem;
-
-    .component-title {
-      font-size: 1.8rem;
-      padding: 0 0.8rem;
-    }
-
-    .experience-container {
-      margin-top: 3.5rem;
-      gap: 1rem;
-      max-height: calc(100vh - 5rem);
-    }
-
-    .experience-item {
-      padding: 1rem;
-
-      .experience-header {
-        gap: 0.6rem;
-
-        .experience-number {
-          width: 28px;
-          height: 28px;
-          font-size: 0.9rem;
-        }
-
-        .experience-content {
-          h3 {
-            font-size: 1.1rem;
-          }
-
-          .experience-meta {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.3rem;
-
-            .company {
-              font-size: 0.75rem;
-              padding: 0.2rem 0.6rem;
-
-              .company-icon {
-                width: 16px;
-                height: 16px;
-              }
-            }
-
-            .year {
-              font-size: 0.75rem;
-              padding: 0.2rem 0.6rem;
-
-              .meta-icon {
-                width: 12px;
-                height: 12px;
-              }
-            }
-          }
-        }
-      }
-
-      .experience-summary {
-        p {
-          font-size: 0.9rem;
-        }
-
-        .read-more-btn {
-          width: 35px;
-          height: 35px;
-
-          .btn-icon {
-            width: 18px;
-            height: 18px;
-          }
-        }
-      }
-    }
-
-    .modal-header {
-      padding: 1rem 1rem 0.8rem;
-
-      h3 {
-        font-size: 1.2rem;
-      }
-    }
-
-    .modal-body {
-      padding: 0.8rem 1rem 1rem;
-
-      .modal-description p {
-        font-size: 0.9rem;
-      }
     }
   }
 }

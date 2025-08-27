@@ -7,23 +7,27 @@
 
   <!-- Menú flotante desplegable -->
   <div class="floating-menu" [class.open]="menuOpen">
-    <a *ngFor="let section of sections" 
-       [routerLink]="['/' + section.id]"
-       routerLinkActive="active"
-       (click)="onMenuClick()">
+    <a *ngFor="let section of sections"
+       (click)="navigateToSection(section.id); onMenuClick()"
+       [class.active]="activeSection === section.id">
       {{ section.label }}
     </a>
   </div>
 
   <!-- Contenedor principal -->
   <main class="main-container">
-    <router-outlet></router-outlet>
+    <app-hero *ngIf="activeSection === 'about'"></app-hero>
+    <app-education *ngIf="activeSection === 'education'"></app-education>
+    <app-experience *ngIf="activeSection === 'experience'"></app-experience>
+    <app-skills *ngIf="activeSection === 'skills'"></app-skills>
+    <app-projects *ngIf="activeSection === 'projects'"></app-projects>
+    <app-contact *ngIf="activeSection === 'contact'"></app-contact>
   </main>
 
   <!-- Indicadores de navegación -->
   <div class="nav-indicators">
-    <div *ngFor="let section of sections; let i = index" 
-         class="nav-dot" 
+    <div *ngFor="let section of sections; let i = index"
+         class="nav-dot"
          [class.active]="activeSection === section.id"
          (click)="navigateToSection(section.id)"
          [title]="section.label">

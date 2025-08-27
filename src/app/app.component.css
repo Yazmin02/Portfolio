@@ -88,7 +88,6 @@ body {
 .floating-menu a.active {
   background: #b3cde0;
   color: #222;
-  font-weight: 600;
 }
 
 /* Contenedor principal */
