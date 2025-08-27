@@ -1,23 +1,15 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/portafolio",
-        "buildCommand": "npm run vercel-build"
-      }
-    },
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "buildCommand": "npm run build:prod",
+  "outputDirectory": "dist/portafolio/browser",
   "routes": [
     {
+      "src": "/",
+      "dest": "/index.csr.html"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/server.js"
+      "dest": "/index.csr.html"
     }
   ]
 }

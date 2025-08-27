@@ -1,46 +1,43 @@
+import 'zone.js/node';
+import '@angular/compiler';
+import { join } from 'path';
+import { existsSync } from 'fs';
 import express from 'express';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { renderApplication } from '@angular/platform-server';
+import { isDevMode } from '@angular/core';
 
-const PORT = process.env.PORT || 4000;
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const DIST_FOLDER = join(__dirname, 'dist/portafolio/browser');
-const SERVER_FOLDER = join(__dirname, 'dist/portafolio/server');
-
+const DIST_FOLDER = join(process.cwd(), 'dist/portafolio/browser');
 const app = express();
 
-// Servir assets estáticos
-app.use(express.static(DIST_FOLDER, { maxAge: '1y' }));
+// Servir archivos estáticos
+app.get('*.*', express.static(DIST_FOLDER, {
+  maxAge: '1y'
+}));
 
-// SSR para todas las demás rutas
+// SSR para todas las rutas
 app.get('*', async (req, res) => {
+  const indexHtml = join(DIST_FOLDER, 'index.html');
   try {
-    // Importar el bundle del servidor dinámicamente
-    const { AppServerModuleNgFactory, renderModule } = await import(
-      join(SERVER_FOLDER, 'main.server.mjs')
-    );
+    // Importar el bootstrap dinámicamente
+    const { default: bootstrap } = await import('./dist/portafolio/server/main.server.mjs');
     
-    const html = await renderModule(AppServerModuleNgFactory, { 
+    const html = await renderApplication(bootstrap, {
+      document: existsSync(indexHtml) ? indexHtml : '<app-root></app-root>',
       url: req.url,
-      documentFilePath: join(DIST_FOLDER, 'index.html')
     });
-    
-    res.status(200).send(html);
+    res.send(html);
   } catch (err) {
     console.error('Error en SSR:', err);
-    
-    // Fallback: servir el index.html si SSR falla
-    try {
-      const indexPath = join(DIST_FOLDER, 'index.html');
-      res.sendFile(indexPath);
-    } catch (fallbackErr) {
-      console.error('Error en fallback:', fallbackErr);
-      res.status(500).send('Error interno del servidor');
-    }
+    res.status(500).send(err instanceof Error ? err.message : err);
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Server listo en http://localhost:${PORT}`);
-});
+// Solo levantar puerto en desarrollo local
+if (isDevMode()) {
+  const PORT = Number(process.env['PORT'] || 4000);
+  app.listen(PORT, () => {
+    console.log(`✅ Server listo en http://localhost:${PORT}`);
+  });
+}
+
+export default app;
